@@ -1,0 +1,28 @@
+<% content_for(:title, "Borrower's Page") %>
+
+<a data-method="delete" href="/logout">Logout</a><br>
+
+<h1>Borrower's Page</h1>
+<b>Name:</b> <%= @borrower.first_name %> <%= @borrower.last_name %><br>
+<b>Amount Needed:</b> <%= @borrower.money %><br>
+<b>Amount Raised:</b> <%= @borrower.raised %><br>
+
+
+<% if @lending_history %>
+<h2>List of people who lent you money</h2>
+<table>
+		<tr>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Amount Lent</th>
+		</tr>
+		<% @lending_history.each do |history| %>
+		<tr>
+			<td><%= history.lender.first_name %> <%= history.lender.last_name %></td>
+			<td><%= history.lender.email %></td>
+			<td><%= history.amount %></td>
+		
+		</tr>
+		<% end %>
+</table>
+<% end %>

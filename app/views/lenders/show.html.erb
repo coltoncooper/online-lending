@@ -1,0 +1,85 @@
+<% content_for(:title, "Lender's Page") %>
+
+<a data-method="delete" href="/logout">Logout</a><br>
+
+<h1>Lender's Page</h1>
+
+<b>Name:</b> <%= @lender.first_name %> <%= @lender.last_name %><br>
+<b>Account Balance:</b> $ <%= @lender.money %><br>
+
+<% if flash[:lender_errors] %>
+	<% flash[:lender_errors].each do |error| %>
+			<h3><%= error %></h3>
+	<% end %>
+<% end %>
+
+<% if @borrower_need_money %> 
+<h2>List of people who are in need of help</h2>
+
+
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Money Needed For</th>
+		<th>Description</th>
+		<th>Amount Needed</th>
+		<th>Amount Raised</th>
+		<th>Action</th>
+	</tr>
+	
+	<% @borrower_need_money.each do |borrower| %>
+	<tr>
+		<td><%= borrower.first_name %> <%= borrower.last_name %></td> 
+		<td><%= borrower.purpose %></td>
+		<td><%= borrower.description %></td>
+		<td><%= borrower.money %></td>
+		<td><%= borrower.raised %></td>
+		<td>
+			<form action="/lenders/lend" method="post">
+				<input type="hidden" name="authenticity_token" value='<%= form_authenticity_token %>'> 
+				<input type="number" name="lend[amount]">
+				<input type="hidden" name="lend[lender_id]" value="<%= @lender.id %>">
+				<input type="hidden" name="lend[borrower_id]" value="<%= borrower.id %>" >
+				<input type='submit' value='Lend'>
+			</form>
+
+		</td>
+	</tr>
+	<% end %>
+</table>
+<% end %>
+
+
+
+<% if @borrower_got_money %>
+<h2>List of people you lent money to:</h2>
+
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Money Needed For</th>
+		<th>Description</th>
+		<th>Amount Needed</th>
+		<th>Amount Raised</th>
+		<th>Action</th>
+	</tr>
+
+	<% @borrower_got_money.each do |history| %>
+	<tr>
+		<td><%= history.borrower.first_name %> <%= history.borrower.last_name %></td> 
+		<td><%= history.borrower.purpose %></td>
+		<td><%= history.borrower.description %></td>
+		<td><%= history.borrower.money %></td>
+		<td><%= history.borrower.raised %></td>
+		<td><%= history.amount %></td>
+	</tr>
+	<% end %>
+</table>
+<% end %>
+
+
+
+
+
+
+

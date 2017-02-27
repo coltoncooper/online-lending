@@ -1,0 +1,79 @@
+<% content_for(:title, "Registration Page") %>
+
+<h1>Lender</h1>
+<form action="/lenders" method="post">
+	<input type="hidden" name="authenticity_token" value='<%= form_authenticity_token %>'> 
+	<p>
+		<label>First Name</label>
+		<input type="text" name="lender[first_name]">
+	</p>
+	<p>
+		<label>Last Name</label>
+		<input type="text" name="lender[last_name]">
+	</p>
+	<p>
+		<label>Email</label>
+		<input type="email" name="lender[email]">
+	</p>
+	<p>
+		<label>Password</label>
+		<input type="password" name="lender[password]">
+	</p>
+	<p>
+		<label>Money</label>
+		<input type="number" name="lender[money]">
+	</p>
+	<input type="submit" value="Register">
+</form><br>
+
+<% if flash[:lender_errors] %>
+	<% flash[:lender_errors].each do |error| %>
+			<p><%= error %></p>
+	<% end %>
+<% end %>
+
+<a href="/login">Already a member?</a><br>
+
+<h1>Borrower</h1>
+<form action="/borrowers" method="post">
+	<input type="hidden" name="authenticity_token" value='<%= form_authenticity_token %>'> 
+	<p>
+		<label>First Name</label>
+		<input type="text" name="borrower[first_name]">
+	</p>
+	<p>
+		<label>Last Name</label>
+		<input type="text" name="borrower[last_name]">
+	</p>
+	<p>
+		<label>Email</label>
+		<input type="email" name="borrower[email]">
+	</p>
+	<p>
+		<label>Password</label>
+		<input type="password" name="borrower[password]">
+	</p>
+	<p>
+		<label>Need Money for:</label>
+		<input type="text" name="borrower[purpose]">
+	</p>
+	<p>
+		<label>Description</label>
+		<textarea name="borrower[description]"></textarea>
+	</p>
+	<p>
+		<label>Amount Needed:</label>
+		<input type="number" name="borrower[money]">
+	</p>
+	<input type="submit" value="Register">
+</form><br>
+
+<% if flash[:borrower_errors] %>
+	<% flash[:borrower_errors].each do |error| %>
+			<p><%= error %></p>
+	<% end %>
+<% end %>
+
+<a href="/login">Already a member?</a>
+
+
